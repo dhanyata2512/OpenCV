@@ -1,5 +1,6 @@
 import cv2 as r
 import os
+from PIL import Image
 
 path="C:\\Users\\Bhulku\\Desktop\\jetlearn\\OpenCV\\images_collage"
 os.chdir(path)
@@ -9,19 +10,23 @@ number_image=0
 for file in os.listdir(path):
     if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg") :
         number_image=number_image+1
+        #getting the size
+        info=Image.open(file)
+        width,height=info.size
+        total_height=total_height+height
+        total_width=total_width+width
 print(number_image)
 
-width=1200
-height=800
+mean_width=total_width//number_image
+mean_height=total_height//number_image
+
 
 mc="mycollage.avi"
-video=r.VideoWriter(mc,0,0.5,(width,height))
+video=r.VideoWriter(mc,0,0.5,(mean_width,mean_height))
 
 
 for file in os.listdir(path):
     if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg") :
         image=r.imread(file)
-        my_image=r.resize(image,(width,height))
+        my_image=r.resize(image,(mean_width,mean_height))
         video.write(my_image)
-        
-        
