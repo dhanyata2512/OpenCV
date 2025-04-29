@@ -40,10 +40,8 @@ while True:
         resized_img=r.resize(face,(WIDTH,HEIGHT))
         r.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
         prediction=model.predict(resized_img)
-        print(prediction)
+        r.putText(img,names[prediction[0]],(x,y-20),r.FONT_HERSHEY_PLAIN,1,(0,255,0))
     r.imshow("face detection",img)
     key=r.waitKey(30)
     if key == 27:
         break
-    
-    
